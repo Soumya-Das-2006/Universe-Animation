@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(ellipse at center, #000428 0%, #000000 100%);
+            overflow: hidden;
+            perspective: 1000px;
+        }
+        .container {
+            font-size: 10px;
+            width: 60em;
+            height: 60em;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotateScene 120s linear infinite;
+        }
+        
+        /* Cosmic Elements */
+        .nebula {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 50%, 
+                rgba(138, 43, 226, 0.15) 0%, 
+                rgba(0, 0, 0, 0) 70%);
+            border-radius: 50%;
+            filter: blur(30px);
+            z-index: -2;
+        }
+        .nebula:nth-child(2) {
+            background: radial-gradient(circle at 70% 20%, 
+                rgba(0, 191, 255, 0.1) 0%, 
+                rgba(0, 0, 0, 0) 70%);
+            transform: rotate(45deg);
+        }
+        
+        /* Sun with corona effect */
+        .sun {
+            position: absolute;
+            top: 25em;
+            left: 25em;
+            width: 12em;
+            height: 12em;
+            background: radial-gradient(circle at 30% 30%, 
+                #ffff00, #ff8c00 70%, #ff4500);
+            border-radius: 50%;
+            box-shadow: 0 0 10em #ff8c00, 
+                        0 0 20em rgba(255, 140, 0, 0.7),
+                        0 0 30em rgba(255, 140, 0, 0.4);
+            animation: pulse 4s infinite alternate, rotateSun 30s linear infinite;
+            z-index: 10;
+        }
+        .sun::after {
+            content: '';
+            position: absolute;
+            top: -5em;
+            left: -5em;
+            right: -5em;
+            bottom: -5em;
+            background: radial-gradient(circle, transparent 40%, rgba(255, 215, 0, 0.2) 100%);
+            border-radius: 50%;
+            filter: blur(20px);
+            z-index: -1;
+        }
+        
+        /* Planets */
+        .planet {
+            position: absolute;
+            border-style: solid;
+            border-color: rgba(255, 255, 255, 0.2) 
+                         transparent 
+                         transparent 
+                         transparent;
+            border-width: 0.1em 0.1em 0 0;
+            border-radius: 50%;
+        }
+        
+        /* Earth System */
+        .earth-orbit {
+            top: 10em;
+            left: 10em;
+            width: 40em;
+            height: 40em;
+            animation: orbit 36.5s linear infinite;
+        }
+        .earth {
+            top: 0;
+            right: 0;
+            width: 4em;
+            height: 4em;
+            background: radial-gradient(circle at 30% 30%, 
+                #1fa2ff, #0066cc 70%, #003366);
+            border-radius: 50%;
+            box-shadow: 0 0 1em rgba(0, 102, 204, 0.8),
+                        inset 0.5em -0.5em 1em rgba(0, 0, 0, 0.5);
+            animation: rotatePlanet 5s linear infinite;
+        }
+        
+        /* Moon */
+        .moon-orbit {
+            top: -1em;
+            right: -1em;
+            width: 6em;
+            height: 6em;
+            animation: orbit 2.7s linear infinite;
+        }
+        .moon {
+            top: 0;
+            right: 0;
+            width: 1em;
+            height: 1em;
+            background: radial-gradient(circle at 30% 30%, 
+                #e6e6e6, #999999 70%, #666666);
+            border-radius: 50%;
+            box-shadow: inset -0.3em -0.1em 0.3em rgba(0, 0, 0, 0.7);
+        }
+        
+        /* Mars System */
+        .mars-orbit {
+            top: 5em;
+            left: 5em;
+            width: 50em;
+            height: 50em;
+            animation: orbit 68.7s linear infinite;
+        }
+        .mars {
+            top: 0;
+            right: 0;
+            width: 3.5em;
+            height: 3.5em;
+            background: radial-gradient(circle at 30% 30%, 
+                #ff7b54, #cc3300 70%, #660000);
+            border-radius: 50%;
+            box-shadow: inset -0.5em -0.5em 1em rgba(0, 0, 0, 0.6);
+            animation: rotatePlanet 7s linear infinite;
+        }
+        
+        /* Saturn with rings */
+        .saturn-orbit {
+            top: 2em;
+            left: 2em;
+            width: 56em;
+            height: 56em;
+            animation: orbit 107.5s linear infinite;
+        }
+        .saturn {
+            top: 0;
+            right: 0;
+            width: 8em;
+            height: 8em;
+            background: radial-gradient(circle at 30% 30%, 
+                #e3c598, #d2a679 70%, #b8860b);
+            border-radius: 50%;
+            animation: rotatePlanet 10s linear infinite;
+        }
+        .saturn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotateX(75deg);
+            width: 12em;
+            height: 3em;
+            background: 
+                linear-gradient(
+                    90deg,
+                    rgba(210, 180, 140, 0.8),
+                    rgba(210, 180, 140, 0.3),
+                    rgba(210, 180, 140, 0.8)
+                );
+            border-radius: 50%;
+            box-shadow: 0 0 0.5em rgba(210, 180, 140, 0.5);
+        }
+        
+        /* Asteroid Belt */
+        .asteroids {
+            position: absolute;
+            top: 8em;
+            left: 8em;
+            width: 44em;
+            height: 44em;
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: orbit 200s linear infinite;
+        }
+        .asteroid {
+            position: absolute;
+            background: linear-gradient(45deg, #8B4513, #A0522D);
+            border-radius: 50%;
+            animation: rotatePlanet 20s linear infinite;
+        }
+        
+        /* Comet */
+        .comet {
+            position: absolute;
+            width: 2em;
+            height: 0.5em;
+            background: linear-gradient(to right, 
+                rgba(255, 255, 255, 0.8), 
+                rgba(0, 191, 255, 0.5));
+            border-radius: 50% 0 0 50%;
+            filter: blur(0.2em);
+            animation: cometFly 40s linear infinite;
+            transform-origin: left center;
+        }
+        .comet::after {
+            content: '';
+            position: absolute;
+            right: -1em;
+            top: 0;
+            width: 1em;
+            height: 100%;
+            background: linear-gradient(to right, 
+                rgba(0, 191, 255, 0.5), 
+                transparent);
+            filter: blur(0.3em);
+        }
+        
+        /* Stars */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite ease-in-out;
+        }
+        .shooting-star {
+            position: absolute;
+            width: 0.3em;
+            height: 0.3em;
+            background: white;
+            border-radius: 50%;
+            filter: blur(0.1em);
+            animation: shoot var(--shoot-duration) linear infinite;
+            opacity: 0;
+        }
+        
+        /* Animations */
+        @keyframes orbit {
+            to { transform: rotate(360deg); }
+        }
+        @keyframes rotatePlanet {
+            to { transform: rotate(360deg); }
+        }
+        @keyframes rotateSun {
+            to { transform: rotate(360deg); }
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 10em #ff8c00, 
+                            0 0 20em rgba(255, 140, 0, 0.7),
+                            0 0 30em rgba(255, 140, 0, 0.4);
+            }
+            100% {
+                transform: scale(1.05);
+                box-shadow: 0 0 15em #ff8c00, 
+                            0 0 30em rgba(255, 140, 0, 0.8),
+                            0 0 45em rgba(255, 140, 0, 0.5);
+            }
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        @keyframes shoot {
+            0% { 
+                transform: translate(0, 0) scale(0.5);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { 
+                transform: translate(100vw, -50vh) scale(1.5);
+                opacity: 0;
+            }
+        }
+        @keyframes cometFly {
+            0% { 
+                transform: translate(-10em, -20em) rotate(45deg) scale(0.5);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { 
+                transform: translate(70em, 50em) rotate(45deg) scale(1);
+                opacity: 0;
+            }
+        }
+        @keyframes rotateScene {
+            to { transform: rotateY(5deg) rotateX(3deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="stars" id="stars"></div>
+        <div class="shooting-star" id="shooting-star"></div>
+        <div class="nebula"></div>
+        <div class="nebula"></div>
+        
+        <div class="sun"></div>
+        
+        <div class="planet earth-orbit">
+            <div class="earth">
+                <div class="planet moon-orbit">
+                    <div class="moon"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="planet mars-orbit">
+            <div class="mars"></div>
+        </div>
+        
+        <div class="planet saturn-orbit">
+            <div class="saturn"></div>
+        </div>
+        
+        <div class="asteroids" id="asteroids"></div>
+        
+        <div class="comet"></div>
+    </div>
+
+    <script>
+        // Create stars
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 300; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.width = `${Math.random() * 4}px`;
+            star.style.height = star.style.width;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.opacity = Math.random();
+            star.style.setProperty('--duration', `${2 + Math.random() * 5}s`);
+            starsContainer.appendChild(star);
+        }
+        
+        // Create shooting stars
+        function createShootingStar() {
+            const shooter = document.getElementById('shooting-star');
+            shooter.style.left = `${Math.random() * 20}%`;
+            shooter.style.top = `${Math.random() * 20}%`;
+            shooter.style.setProperty('--shoot-duration', `${3 + Math.random() * 5}s`);
+            setTimeout(createShootingStar, 8000 + Math.random() * 12000);
+        }
+        createShootingStar();
+        
+        // Create asteroids
+        const asteroidBelt = document.getElementById('asteroids');
+        for (let i = 0; i < 50; i++) {
+            const asteroid = document.createElement('div');
+            asteroid.classList.add('asteroid');
+            const size = 0.2 + Math.random() * 0.8;
+            asteroid.style.width = `${size}em`;
+            asteroid.style.height = `${size}em`;
+            
+            // Position along the orbit
+            const angle = Math.random() * Math.PI * 2;
+            const distance = 22 + (Math.random() * 2 - 1);
+            asteroid.style.left = `${22 + Math.cos(angle) * distance}em`;
+            asteroid.style.top = `${22 + Math.sin(angle) * distance}em`;
+            
+            asteroid.style.animationDuration = `${50 + Math.random() * 100}s`;
+            asteroidBelt.appendChild(asteroid);
+        }
+    </script>
+</body>
+</html>
