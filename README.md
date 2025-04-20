@@ -3,15 +3,15 @@
 A beautiful animated simulation of the universe built using HTML, CSS, and JavaScript.
 
 ![Universe Animation](https://img.shields.io/badge/Status-Live-brightgreen?style=flat)  
-🔗 **Live Demo:** [Click Here](https://Soumya-Das-2006.github.io/Universe-Animation/univarse.html)
+🔗 **Live Demo:** [Click Here](https://soumya-das-2006.github.io/Universe-Animation/univarse.html)
 
 ---
 
 ## 📁 Project Structure
 
 - `univarse.html` – Main animation page
-- `style.css` – Custom styles (if applicable)
-- `script.js` – JavaScript (if used for motion/effects)
+- `style.css` – Custom styles
+- `script.js` – JavaScript for animation and effects
 
 ---
 
@@ -19,14 +19,14 @@ A beautiful animated simulation of the universe built using HTML, CSS, and JavaS
 
 - Animated celestial motion 🌠  
 - Custom starfield or galaxy background 🌌  
-- Lightweight and responsive  
-- Works in all modern browsers  
+- Lightweight and responsive design  
+- Compatible with all modern browsers
 
 ---
 
 ## 📸 Preview
 
-> Add a screenshot or GIF here if available!
+> Add a screenshot or GIF here to give users a visual preview of the animation.
 
 ---
 
@@ -34,7 +34,7 @@ A beautiful animated simulation of the universe built using HTML, CSS, and JavaS
 
 - HTML5  
 - CSS3 (animations, gradients, etc.)  
-- JavaScript (if applicable)
+- JavaScript (used for motion/effects)
 
 ---
 
