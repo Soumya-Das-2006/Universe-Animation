@@ -3,7 +3,7 @@
 A beautiful animated simulation of the universe built using HTML, CSS, and JavaScript.
 
 ![Universe Animation](https://img.shields.io/badge/Status-Live-brightgreen?style=flat)  
-🔗 **Live Demo:** [Click Here](https://soumya-das-2006.github.io/Universe-Animation/univarse.html)
+🔗 **Live Demo:** [Click Here](https://soumya-das-2006.github.io/Universe-Animation/)
 
 ---
 
